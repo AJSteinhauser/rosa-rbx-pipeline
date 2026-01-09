@@ -1,41 +1,44 @@
 import { HttpService } from "@rbxts/services";
 import { LeakyBucket } from "../../utils/leaky-bucket";
 import { Event } from "../models/event.model";
-import { ACCUMULATOR_BUCKET_SIZE, ACCUMULATOR_LEAK_PER_SECOND } from "../models/accumulator.model";
+import { ACCUMULATOR_BUCKET_SIZE, ACCUMULATOR_LEAK_PER_SECOND, BODY_OVERSHOOT_TARGET } from "../models/accumulator.model";
+import { ScalingBuffer } from "../../utils/scaling-buffer";
 
 export class Accumulator {
-  private eventsEncoded = ""
   private playerBuckets = new Map<string, LeakyBucket>(); 
+  private dataBuffer: ScalingBuffer = new ScalingBuffer();
 
   constructor() {
     this.intializeEventEncoded()
   }
 
-  public addEvent(event: Event) {
+  public addEvent(event: Event): boolean {
     const playerBucket = this.getOrInitializePlayerBucket(event.playerId);
     const isAllowed = playerBucket.allow();
     if (!isAllowed) {
       warn(`Player ${event.playerId} is rate limited.`);
-      return
+      return false
     }
     this.appendEvent(event)
+    return this.dataBuffer.size() >= BODY_OVERSHOOT_TARGET
   }
 
   public flushEvents() {
-    this.eventsEncoded += "]";
-    const buff = buffer.fromstring(this.eventsEncoded)
+    this.dataBuffer.push_string("]")
+    const finalBuffer = this.dataBuffer.getBuffer();
     this.intializeEventEncoded()
+    return finalBuffer
   }
 
   private intializeEventEncoded() {
-    this.eventsEncoded = "[";
+    this.dataBuffer = new ScalingBuffer();
+    this.dataBuffer.push_string("[")
   }
 
   private appendEvent(event: Event) {
     const encoded = this.encodeEvent(event);
-    this.eventsEncoded += encoded
+    this.dataBuffer.push_string(encoded);
   }
-
 
   private encodeEvent(event: Event): string {
     return `,${HttpService.JSONEncode(event)}`
@@ -50,6 +53,5 @@ export class Accumulator {
     this.playerBuckets.set(playerId, newBucket);
     return newBucket
   }
-
 }
 

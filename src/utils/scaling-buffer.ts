@@ -35,6 +35,14 @@ export class ScalingBuffer {
     this.currentSize += 4
   }
 
+  public push_string(value: string) {
+    if (this.currentSize + value.size() >= buffer.len(this.buffer)) {
+      this.resizeBuffer()
+    }
+    buffer.writestring(this.buffer, this.currentSize, value)
+    this.currentSize += value.size()
+  }
+
   private checkBuffer() {
     if (this.currentSize === buffer.len(this.buffer)) {
       this.resizeBuffer()
