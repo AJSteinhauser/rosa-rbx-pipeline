@@ -1,4 +1,4 @@
-import { HTTPS_BODY_LIMIT } from "../models/accumulator.model"
+import { HTTPS_BODY_LIMIT } from "../models/constants.model"
 
 const encodingService = game.GetService("EncodingService")
 

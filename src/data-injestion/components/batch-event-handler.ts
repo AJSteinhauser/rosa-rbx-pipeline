@@ -20,9 +20,9 @@ export class BatchHandler {
   }
 
   public addEvent(event: Event) {
-    const [isValid, error] = this.typeEnforcer(event)
+    const [isValid, err] = this.typeEnforcer(event)
     if (!isValid) {
-      throw `Invalid event: ${error}`
+      throw `Invalid event: ${err}`
     }
     const readyToFlush = this.accumulator.addEvent(event)
     if (readyToFlush) {
