@@ -1,11 +1,11 @@
 import { HttpService } from "@rbxts/services";
-import { Event } from "../models/event.model";
 import { Accumulator } from "./accumulator";
 import { CompressionHandler } from "./compressor";
 import { splitArrayInHalf } from "../utils/array-manipulation";
 import { Signature } from "./signature";
 import { sendRetryHandler } from "../utils/api.utils";
 import { EVENTS_API_ROUTE } from "../models/constants.model";
+import { Event } from "../../models/event.model";
 
 let handler: BatchHandler
 

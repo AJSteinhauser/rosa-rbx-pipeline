@@ -1,8 +1,8 @@
 import { HttpService } from "@rbxts/services";
 import { LeakyBucket } from "../../utils/leaky-bucket";
-import { Event } from "../models/event.model";
 import { ScalingBuffer } from "../../utils/scaling-buffer";
 import { ACCUMULATOR_BUCKET_SIZE, ACCUMULATOR_LEAK_PER_SECOND, BODY_OVERSHOOT_TARGET } from "../models/constants.model";
+import { Event } from "../../models/event.model";
 
 export class Accumulator {
   private playerBuckets = new Map<string, LeakyBucket>(); 

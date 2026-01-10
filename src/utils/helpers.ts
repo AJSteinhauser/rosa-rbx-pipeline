@@ -1,4 +1,4 @@
-import { Position } from "../data-injestion/models/event.model"
+import { Position } from "../models/event.model"
 
 export const vector3ToPosition = (vector3: Vector3): Position => {
   return {

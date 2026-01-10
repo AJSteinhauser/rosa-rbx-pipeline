@@ -1,3 +1,5 @@
-export function makeHello(name: string) {
-	return `Hello from ${name}!`;
+import { BatchHandler } from "./egress-pipeline/components/batch-event-handler"
+
+export const createBatch = () => {
+  return new BatchHandler()
 }
