@@ -1,21 +1,29 @@
 
-export type Position = {
+export interface Position {
   x: number;
   y: number;
   z: number;
 };
 
-export type Event = {
-  tag: string;
-  position: Position;
+export interface Event {
+  eventId: string
   eventTimeStamp: number;
-  playerId: string;
+  sessionID: string;
 
+  tag: string;
   platform: string
+  position: Position;
+  version: string;
+
   quantity?: number;
   teamId?: string;
   mapName?: string;
-  version?: string;
 
-  custom?: Record<string, any>;
+  custom?: Record<string, string | number>;
 };
+
+export interface EventRequest {
+  tag: string
+  quantity?: number
+  custom: Event['custom']
+}

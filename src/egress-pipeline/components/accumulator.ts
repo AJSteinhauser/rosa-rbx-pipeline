@@ -13,10 +13,10 @@ export class Accumulator {
   }
 
   public addEvent(event: Event): boolean {
-    const playerBucket = this.getOrInitializePlayerBucket(event.playerId);
+    const playerBucket = this.getOrInitializeSessionBucket(event.sessionID);
     const isAllowed = playerBucket.allow();
     if (!isAllowed) {
-      warn(`Player ${event.playerId} is rate limited.`);
+      warn(`Player ${event.sessionID} is rate limited.`);
       return false
     }
     this.appendEvent(event)
@@ -44,13 +44,13 @@ export class Accumulator {
     return `,${HttpService.JSONEncode(event)}`
   }
 
-  private getOrInitializePlayerBucket(playerId: string): LeakyBucket {
-    const playerBucket = this.playerBuckets.get(playerId)
+  private getOrInitializeSessionBucket(sessionId: string): LeakyBucket {
+    const playerBucket = this.playerBuckets.get(sessionId)
     if (playerBucket) {
       return playerBucket
     }
     const newBucket = new LeakyBucket(ACCUMULATOR_BUCKET_SIZE, ACCUMULATOR_LEAK_PER_SECOND);
-    this.playerBuckets.set(playerId, newBucket);
+    this.playerBuckets.set(sessionId, newBucket);
     return newBucket
   }
 }
