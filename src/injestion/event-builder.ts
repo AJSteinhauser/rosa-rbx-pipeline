@@ -5,25 +5,6 @@ import { SessionManager } from "./session-manager";
 import { vector3ToPosition } from "../utils/helpers";
 import { PlayerPlatformManager } from "./player-platform-manager";
 
-
-
-// export interface Event {
-//   eventId: string
-//   eventTimeStamp: number;
-//   sessionID: string;
-//
-//   tag: string;
-//   platform: string
-//   position: Position;
-//   version: string;
-//
-//   quantity?: number;
-//   teamId?: string;
-//   mapName?: string;
-//
-//   custom?: Record<string, string | number>;
-// };
-
 export class EventBuilder {
   sessionManager = new SessionManager()
   platformManager = new PlayerPlatformManager()
@@ -33,7 +14,7 @@ export class EventBuilder {
     this.config = config
   }
 
-  async buildEvent(event: EventRequest, player: Player): Promise<Event> {
+  async buildEvent(player: Player, event: EventRequest): Promise<Event> {
     const userDefinedPlayerPosition = this.config.getPosition?.(player)
     const userPosition = userDefinedPlayerPosition ? 
       vector3ToPosition(userDefinedPlayerPosition) : 
@@ -57,11 +38,11 @@ export class EventBuilder {
     return output
   }
 
-  getVersion(): string {
+  private getVersion(): string {
     return tostring(game.PlaceVersion)
   }
 
-  getPlayerPosition(player: Player): Position {
+  private getPlayerPosition(player: Player): Position {
     const character = player.Character
     if (!character) {
       throw "Player has no character"

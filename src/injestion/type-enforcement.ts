@@ -65,6 +65,10 @@ export class RunTimeTypeEnforcement {
       if (typeOf(value.custom) !== "table") {
         throw `Event.custom is not a table: ${rawEvent}`
       }
+      const stringifed = HttpService.JSONEncode(value.custom)
+      if (stringifed.size() > 500) {
+        throw `Event.custom is too large: ${rawEvent}`
+      }
       for (const [key, entry] of pairs(value.custom)) {
         const valueType = typeOf(entry)
         if (valueType !== "string" && valueType !== "number") {

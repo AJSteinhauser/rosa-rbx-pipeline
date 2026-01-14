@@ -25,4 +25,9 @@ export interface UserConfig {
    * @returns the current map   
   */
   getMapName?: (player: Player) => string
+
+  clientEvents: {
+    enabled: boolean
+    whitelistedEventTags?: string[]
+  }
 }
