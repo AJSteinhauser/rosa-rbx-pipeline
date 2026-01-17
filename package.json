@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "out/init.lua",
   "scripts": {
-    "build": "rbxtsc",
+    "build": "npm run clean && npm run compile && npm run package",
+    "compile": "rbxtsc",
+    "package": "mkdir -p dist && rojo build --output dist/rosa.rbxl",
+    "clean": "rm -rf out && rm -rf dist",
     "watch": "rbxtsc -w",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run compile"
   },
   "keywords": [],
   "author": "",

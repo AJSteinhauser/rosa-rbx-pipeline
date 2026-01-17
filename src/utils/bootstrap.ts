@@ -1,6 +1,5 @@
-import { EventBuilder } from "./injestion/event-builder";
-import { EventIngestionHandler } from "./injestion/event-injestion-handler";
-import { UserConfig } from "./models/user-config.model";
+import { EventIngestionHandler } from "../injestion/event-injestion-handler";
+import { UserConfig } from "../models/user-config.model";
 
 let intialized = false
 
