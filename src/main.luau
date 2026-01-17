@@ -39,3 +39,5 @@ local DEFAULT_CONFIG: UserConfig = {
 		enabled = false
 	},
 }
+
+return

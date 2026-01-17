@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noLib": false,
+		"types": ["jest", "node"],
+		"typeRoots": ["node_modules/@types", "node_modules/@rbxts"]
+	},
+	"include": ["src/**/__tests__/**/*", "src/**/*.test.ts", "src/**/*.spec.ts"]
+}
