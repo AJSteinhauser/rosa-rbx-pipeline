@@ -53,6 +53,9 @@ function EventIngestionHandler.new(userConfig)
 	else
 		-- Wait for the server to create the client event stream
 		self.clientEventStream = ReplicatedStorage:WaitForChild("RosaClientEventStream")
+		if userConfig.defaultMetrics then
+			DefaultMetrics.setupClient(self, userConfig.defaultMetrics)
+		end
 	end
 
 	return self

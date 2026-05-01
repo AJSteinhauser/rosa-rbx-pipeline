@@ -18,14 +18,24 @@
 return require(script.ingestion["event-ingestion-handler"]).new({
     -- Default metrics — fires common events automatically. Set a group to false to disable.
     defaultMetrics = {
-        playerEvents    = true, -- PlayerJoin, PlayerLeave (with sessionDuration)
-        characterEvents = true, -- CharacterSpawn, CharacterDeath
+        playerEvents      = true, -- PlayerJoin, PlayerLeave (with sessionDuration)
+        characterEvents   = true, -- CharacterSpawn, CharacterDeath
+        paths             = true, -- _PathStart, _PathTag (10% sample)
+        proximityEvents   = true, -- _PromptTriggered (ProximityPrompt activations)
+        toolEvents        = true, -- _ToolEquipped, _ToolActivated
+        damageEvents      = true, -- _DamageTaken
+        idleDetection     = true, -- _PlayerIdle
+        idleThresholdSeconds  = 15, -- seconds stationary before _PlayerIdle fires
+        marketplaceEvents     = true, -- ProductPurchased/Declined, GamePassPurchased/Declined
+        chatEvents            = true, -- ChatMessage
+        teamEvents            = true, -- TeamChanged
+        clientPerformance = false, -- _FpsSample (LocalScript context; opt-in for perf heatmaps)
     },
 
     -- Client-side events forwarded from LocalScripts.
     clientEvents = {
         enabled              = true,
-        whitelistedEventTags = { "ItemPickup", "PlayerDeath" }, -- optional, remove to allow all tags
+        whitelistedEventTags = { "ButtonPress" }, -- optional, remove to allow all tags
     },
 
     -- Optional overrides (all have sensible defaults):

@@ -1,7 +1,7 @@
 local Players    = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-local SAMPLE_RATE         = 0.10
+local SAMPLE_RATE         = 0.1
 local DISTANCE_THRESHOLD  = 10   -- studs
 local TIME_FALLBACK       = 4    -- seconds
 local DIRECTION_THRESHOLD = 35   -- degrees
@@ -22,8 +22,7 @@ return function(handler, userConfig)
 		if not pos then return end
 		tracked[player] = { lastPos = pos, lastDir = nil, lastTime = os.clock() }
 		handler:addServerEvent(player, {
-			tag    = "PathStart",
-			custom = { message = "We're going to track this player's movements" },
+			tag    = "_PathStart",
 		})
 	end
 
@@ -45,7 +44,7 @@ return function(handler, userConfig)
 
 			local elapsed = now - state.lastTime
 			if distance >= DISTANCE_THRESHOLD or directionChanged or elapsed >= TIME_FALLBACK then
-				handler:addServerEvent(player, { tag = "PathTag" })
+				handler:addServerEvent(player, { tag = "_PathTag" })
 				state.lastPos  = currentPos
 				state.lastDir  = distance > 0.1 and delta.Unit or state.lastDir
 				state.lastTime = now
