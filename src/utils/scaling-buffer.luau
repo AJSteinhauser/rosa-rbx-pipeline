@@ -1,7 +1,7 @@
 -- Dynamically resizing buffer for accumulating string/binary data.
 -- Grows in 100KB chunks to avoid frequent reallocations.
 
-local AUTO_ALLOCATE_SIZE = 100_000
+local Constants = require(script.Parent.Parent.models.constants)
 
 local ScalingBuffer = {}
 ScalingBuffer.__index = ScalingBuffer
@@ -9,7 +9,7 @@ ScalingBuffer.__index = ScalingBuffer
 function ScalingBuffer.new()
 	local self = setmetatable({}, ScalingBuffer)
 	self.currentSize = 0
-	self.buf = buffer.create(AUTO_ALLOCATE_SIZE)
+	self.buf = buffer.create(Constants.SCALING_BUFFER_CHUNK_SIZE)
 	return self
 end
 
@@ -20,7 +20,7 @@ end
 -- extraNeeded lets callers request more than the default chunk when a single
 -- push would exceed the standard allocation size (e.g. a >100KB string).
 function ScalingBuffer:resizeBuffer(extraNeeded: number?)
-	local extra = math.max(extraNeeded or 0, AUTO_ALLOCATE_SIZE)
+	local extra = math.max(extraNeeded or 0, Constants.SCALING_BUFFER_CHUNK_SIZE)
 	local newBuf = buffer.create(self.currentSize + extra)
 	buffer.copy(newBuf, 0, self.buf, 0, self.currentSize)
 	self.buf = newBuf

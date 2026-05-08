@@ -1,4 +1,5 @@
 local HttpService = game:GetService("HttpService")
+local Constants   = require(script.Parent.Parent.models.constants)
 
 -- Validates that a fully-built Event table has the correct shape and types.
 -- Throws a descriptive error if any field is missing or has the wrong type.
@@ -53,8 +54,8 @@ local function enforce(event)
 		if typeof(event.custom) ~= "table" then
 			error(`Event.custom is not a table: {rawEvent}`)
 		end
-		if #HttpService:JSONEncode(event.custom) > 500 then
-			error(`Event.custom is too large (max 500 encoded chars): {rawEvent}`)
+		if #HttpService:JSONEncode(event.custom) > Constants.CUSTOM_FIELD_MAX_ENCODED_SIZE then
+			error(`Event.custom is too large (max {Constants.CUSTOM_FIELD_MAX_ENCODED_SIZE} encoded chars): {rawEvent}`)
 		end
 		for key, value in pairs(event.custom) do
 			local valueType = typeof(value)

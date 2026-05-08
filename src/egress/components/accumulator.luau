@@ -1,7 +1,7 @@
 local HttpService   = game:GetService("HttpService")
 local LeakyBucket   = require(script.Parent.Parent.Parent.utils["leaky-bucket"])
 local ScalingBuffer = require(script.Parent.Parent.Parent.utils["scaling-buffer"])
-local Constants     = require(script.Parent.Parent.models.constants)
+local Constants     = require(script.Parent.Parent.Parent.models.constants)
 
 -- Accumulates JSON-encoded events into a single buffer, rate-limiting per session.
 -- The buffer grows until it reaches BODY_OVERSHOOT_TARGET, then signals a flush.

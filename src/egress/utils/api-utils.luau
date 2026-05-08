@@ -1,5 +1,5 @@
 local HttpService = game:GetService("HttpService")
-local Constants = require(script.Parent.Parent.models.constants)
+local Constants = require(script.Parent.Parent.Parent.models.constants)
 local ApiModels = require(script.Parent.Parent.models.api)
 
 -- Sends an HTTP request and retries on transient failures with exponential backoff.

@@ -1,5 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Constants = require(ReplicatedStorage.RosaRbxPipeline.egress.models.constants)
+local Constants = require(ReplicatedStorage.RosaRbxPipeline.models.constants)
 local ApiModels = require(ReplicatedStorage.RosaRbxPipeline.egress.models.api)
 
 return function()

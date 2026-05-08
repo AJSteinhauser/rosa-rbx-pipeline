@@ -47,6 +47,12 @@ local function makeSetup(idleThresholdSeconds)
 
 	local userConfig = {
 		defaultMetrics = { idleThresholdSeconds = idleThresholdSeconds or 10 },
+		getPosition = function(p)
+			local char = p.Character
+			if not char then return nil end
+			local hrp = char:FindFirstChild("HumanoidRootPart")
+			return hrp and hrp.Position
+		end,
 	}
 
 	return {

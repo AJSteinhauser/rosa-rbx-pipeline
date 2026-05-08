@@ -1,5 +1,5 @@
 local HttpService = game:GetService("HttpService")
-local Constants = require(script.Parent.Parent.models.constants)
+local Constants = require(script.Parent.Parent.Parent.models.constants)
 
 -- Generates HTTP headers for an API request.
 -- The api-secret is fetched from Roblox secrets (never exposed in plaintext).

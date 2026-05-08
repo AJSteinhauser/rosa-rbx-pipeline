@@ -5,9 +5,7 @@ local Compressor   = require(script.Parent.compressor)
 local Signature    = require(script.Parent.signature)
 local ArrayUtils   = require(script.Parent.Parent.utils["array-manipulation"])
 local ApiUtils     = require(script.Parent.Parent.utils["api-utils"])
-local Constants    = require(script.Parent.Parent.models.constants)
-
-local HEARTBEAT_FLUSH_INTERVAL = 3
+local Constants    = require(script.Parent.Parent.Parent.models.constants)
 
 -- Singleton: only one BatchHandler may exist per server.
 local instance = nil
@@ -24,7 +22,7 @@ function BatchHandler.new()
 
 	-- Periodic flush: send whatever has accumulated every 30 seconds.
 	RunService.Heartbeat:Connect(function()
-		if os.clock() - self._lastFlushAt >= HEARTBEAT_FLUSH_INTERVAL then
+		if os.clock() - self._lastFlushAt >= Constants.HEARTBEAT_FLUSH_INTERVAL then
 			self:flushIfNonEmpty()
 		end
 	end)

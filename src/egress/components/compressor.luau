@@ -1,5 +1,5 @@
 local EncodingService = game:GetService("EncodingService")
-local Constants = require(script.Parent.Parent.models.constants)
+local Constants = require(script.Parent.Parent.Parent.models.constants)
 
 -- Attempts to compress a buffer using Zstd at increasing compression levels.
 -- Returns the compressed buffer if it fits within HTTPS_BODY_LIMIT, otherwise nil.
