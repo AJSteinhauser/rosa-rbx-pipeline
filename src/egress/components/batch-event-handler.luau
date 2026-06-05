@@ -13,6 +13,10 @@ local instance = nil
 local BatchHandler = {}
 BatchHandler.__index = BatchHandler
 
+function BatchHandler.getInstance()
+	return instance
+end
+
 function BatchHandler.new()
 	assert(instance == nil, "Only one instance of BatchHandler is allowed")
 	local self = setmetatable({}, BatchHandler)
